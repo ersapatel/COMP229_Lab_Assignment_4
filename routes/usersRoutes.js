@@ -1,24 +1,28 @@
 import express from 'express';
 import usersCtrl from '../controllers/user.controller.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Get All Users
-router.get('/', usersCtrl.getAllUsers);
+// Login route (no auth)
+router.post('/login', usersCtrl.loginUser);
 
-// Get User by Id
-router.get('/:id', usersCtrl.getUserById);
+// Protected: Get all users
+router.get('/', authMiddleware, usersCtrl.getAllUsers);
 
-// Create user
+// Protected: Get user by Id
+router.get('/:id', authMiddleware, usersCtrl.getUserById);
+
+// Create user (register)
 router.post('/', usersCtrl.createUser);
 
-// User put call
+// Update user
 router.put('/:id', usersCtrl.updateUser);
 
-// Delete user by id
-router.delete('/:id', usersCtrl.deleteUserById);
+// Protected: Delete user by id
+router.delete('/:id', authMiddleware, usersCtrl.deleteUserById);
 
-// Delete all user
-router.delete('/', usersCtrl.deleteAllUsers);
+// Protected: Delete all users
+router.delete('/', authMiddleware, usersCtrl.deleteAllUsers);
 
 export default router;

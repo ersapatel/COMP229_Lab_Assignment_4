@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ItemsSchema = new mongoose.Schema({
+const UsersSchema = new mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String, required: true },
@@ -8,6 +8,6 @@ const ItemsSchema = new mongoose.Schema({
   updated: { type: Date, required: true }
 });
 
-const Users = mongoose.model('Users', ItemsSchema);
+const Users = mongoose.model('Users', UsersSchema);
 
 export default Users;

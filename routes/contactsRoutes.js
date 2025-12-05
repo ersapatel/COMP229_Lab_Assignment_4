@@ -1,24 +1,25 @@
 import express from 'express';
 import contactsCtrl from '../controllers/contact.controller.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Get all contacts
-router.get('/', contactsCtrl.getAllContacts);
+// Get all contacts (protected)
+router.get('/', authMiddleware, contactsCtrl.getAllContacts);
 
-// get contact by id
-router.get('/:id', contactsCtrl.getContactById);
+// Get contact by id (protected)
+router.get('/:id', authMiddleware, contactsCtrl.getContactById);
 
 // Create new contact
 router.post('/', contactsCtrl.createContact);
 
-// Contact put call
+// Update contact
 router.put('/:id', contactsCtrl.updateContact);
 
-// Delete contact by id
-router.delete('/:id', contactsCtrl.deleteContactById);
+// Delete contact by id (protected)
+router.delete('/:id', authMiddleware, contactsCtrl.deleteContactById);
 
-// Delete all contacts
-router.delete('/', contactsCtrl.deleteAllContacts);
+// Delete all contacts (protected)
+router.delete('/', authMiddleware, contactsCtrl.deleteAllContacts);
 
 export default router;
